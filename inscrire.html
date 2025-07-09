@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription - Skill Center Algérie Télécom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- jQuery pour charger le header -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <style>
+    :root {
+      --python-blue: #3776AB;
+      --python-yellow: #FFD43B;
+      --python-white: #F0F0F0;
+      --gradient-blue: linear-gradient(135deg, #3776AB 0%, #2a5f8a 100%);
+      --gradient-yellow: linear-gradient(135deg, #FFD43B 0%, #ffc107 100%);
+      --gradient-mixed: linear-gradient(135deg, #3776AB 0%, #FFD43B 100%);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 0;
+    }
+    
+    /* Section d'inscription */
+    .register-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 20px 0 40px 0;
+    }
+    
+    .register-container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .register-card {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border: 3px solid transparent;
+      background: linear-gradient(white, white) padding-box, var(--gradient-mixed) border-box;
+    }
+    
+    .register-header {
+      background: var(--gradient-blue);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .register-body {
+      padding: 40px;
+      background-color: white;
+    }
+    
+    .form-control {
+      border-radius: 10px;
+      padding: 12px 15px;
+      border: 2px solid #e9ecef;
+      transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+      border-color: var(--python-yellow);
+      box-shadow: 0 0 0 0.25rem rgba(255, 212, 59, 0.25);
+    }
+    
+    .input-group-text {
+      background: var(--gradient-yellow);
+      color: #333;
+      border: none;
+      border-radius: 10px 0 0 10px !important;
+      font-weight: 600;
+    }
+    
+    .btn-register {
+      background: var(--gradient-mixed);
+      border: none;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: all 0.3s;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-register::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 212, 59, 0.4), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-register:hover::before {
+      left: 100%;
+    }
+    
+    .btn-register:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 212, 59, 0.4);
+    }
+    
+    .user-type-select, .object-select {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .user-type-btn, .object-btn {
+      flex: 1 0 calc(33.333% - 10px);
+      min-width: 120px;
+      border: 2px solid #e9ecef;
+      background: white;
+      padding: 12px 8px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .user-type-btn::before, .object-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-yellow);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .user-type-btn:hover::before, .object-btn:hover::before {
+      opacity: 0.1;
+    }
+    
+    .user-type-btn:hover, .object-btn:hover {
+      border-color: var(--python-yellow);
+      transform: translateY(-2px);
+    }
+    
+    .user-type-btn.selected, .object-btn.selected {
+      border-color: var(--python-yellow);
+      background: linear-gradient(135deg, rgba(255, 212, 59, 0.1) 0%, rgba(55, 118, 171, 0.1) 100%);
+    }
+    
+    .user-type-btn i, .object-btn i {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      color: var(--python-blue);
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+    }
+    
+    .user-type-btn.selected i, .object-btn.selected i {
+      color: var(--python-yellow);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .user-type-btn span, .object-btn span {
+      position: relative;
+      z-index: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .object-btn {
+      flex: 1 0 calc(50% - 10px);
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+      color: #6c757d;
+    }
+    
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .divider::before {
+      margin-right: 10px;
+    }
+    
+    .divider::after {
+      margin-left: 10px;
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .login-link a {
+      color: var(--python-blue);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .login-link a:hover {
+      color: var(--python-yellow);
+      text-decoration: underline;
+    }
+    
+    .form-section {
+      margin-bottom: 30px;
+    }
+    
+    .form-section h5 {
+      color: var(--python-blue);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .required {
+      color: #dc3545;
+    }
+    
+    @media (max-width: 768px) {
+      .user-type-btn, .object-btn {
+        flex: 1 0 calc(50% - 10px);
+        min-width: 100px;
+      }
+      
+      .register-body {
+        padding: 25px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .user-type-btn, .object-btn {
+        flex: 1 0 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Container pour le header -->
+  <div id="header-container"></div>
+
+  <!-- Section d'inscription -->
+  <section class="register-section">
+    <div class="register-container">
+      <div class="register-card">
+        <div class="register-header">
+          <h2><i class="fas fa-user-plus"></i> Inscription</h2>
+          <p class="mb-0">Rejoignez notre communauté d'apprentissage</p>
+        </div>
+        
+        <div class="register-body">
+          <form>
+            <!-- Informations personnelles -->
+            <div class="form-section">
+              <h5><i class="fas fa-user me-2"></i>Informations personnelles</h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="nom" class="form-label">Nom <span class="required">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="nom" placeholder="Votre nom" required>
+                  </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="prenom" class="form-label">Prénom <span class="required">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="prenom" placeholder="Votre prénom" required>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Adresse email <span class="required">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" placeholder="votre@email.com" required>
+                  </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="numero" class="form-label">Numéro de téléphone <span class="required">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="tel" class="form-control" id="numero" placeholder="0X XX XX XX XX" required>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="date_inscription" class="form-label">Date d'inscription <span class="required">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                  <input type="date" class="form-control" id="date_inscription" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider">Profil</div>
+
+            <!-- Type d'utilisateur -->
+            <div class="form-section">
+              <h5><i class="fas fa-briefcase me-2"></i>Je suis <span class="required">*</span></h5>
+              <div class="user-type-select">
+                <div class="user-type-btn selected" data-type="etudiant">
+                  <i class="fas fa-user-graduate"></i>
+                  <span>Étudiant</span>
+                </div>
+                <div class="user-type-btn" data-type="auto-entrepreneur">
+                  <i class="fas fa-store"></i>
+                  <span>Auto-entrepreneur</span>
+                </div>
+                <div class="user-type-btn" data-type="start-up">
+                  <i class="fas fa-lightbulb"></i>
+                  <span>Start-up</span>
+                </div>
+                <div class="user-type-btn" data-type="entreprise">
+                  <i class="fas fa-building"></i>
+                  <span>Entreprise</span>
+                </div>
+                <div class="user-type-btn" data-type="partenaire">
+                  <i class="fas fa-handshake"></i>
+                  <span>Partenaire</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Objet d'intérêt -->
+            <div class="form-section">
+              <h5><i class="fas fa-target me-2"></i>Je m'intéresse à <span class="required">*</span></h5>
+              <div class="object-select">
+                <div class="object-btn selected" data-object="formation">
+                  <i class="fas fa-graduation-cap"></i>
+                  <span>Formation</span>
+                </div>
+                <div class="object-btn" data-object="coworking">
+                  <i class="fas fa-users"></i>
+                  <span>Coworking</span>
+                </div>
+                <div class="object-btn" data-object="podcast">
+                  <i class="fas fa-podcast"></i>
+                  <span>Podcast</span>
+                </div>
+                <div class="object-btn" data-object="labAI">
+                  <i class="fas fa-robot"></i>
+                  <span>Lab AI</span>
+                </div>
+                <div class="object-btn" data-object="evenement">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>Événement</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider">Finaliser</div>
+
+            <!-- Bouton d'inscription -->
+            <button type="submit" class="btn btn-register mb-3">
+              <i class="fas fa-user-plus me-2"></i>S'inscrire maintenant
+            </button>
+            
+            <!-- Lien vers la connexion -->
+            <div class="login-link">
+              <p>Vous avez déjà un compte ? <a href="login.html">Se connecter</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Charger le header
+    $(document).ready(function(){
+      $('#header-container').load('header.html');
+      
+      // Définir la date d'aujourd'hui par défaut
+      document.getElementById('date_inscription').valueAsDate = new Date();
+    });
+    
+    // Sélection du type d'utilisateur
+    document.querySelectorAll('.user-type-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.user-type-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+    
+    // Sélection de l'objet d'intérêt (sélection multiple possible)
+    document.querySelectorAll('.object-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+    
+    // Validation du formulaire
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Vérifier qu'au moins un type est sélectionné
+      const selectedType = document.querySelector('.user-type-btn.selected');
+      if (!selectedType) {
+        alert('Veuillez sélectionner votre type de profil');
+        return;
+      }
+      
+      // Vérifier qu'au moins un objet est sélectionné
+      const selectedObjects = document.querySelectorAll('.object-btn.selected');
+      if (selectedObjects.length === 0) {
+        alert('Veuillez sélectionner au moins un centre d\'intérêt');
+        return;
+      }
+      
+      // Ici vous pouvez ajouter la logique d'envoi du formulaire
+      alert('Inscription réussie ! Bienvenue dans notre communauté.');
+    });
+  </script>
+</body>
+</html>
