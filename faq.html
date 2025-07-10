@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre de Compétences Algerie Telecom - FAQ</title>
+    <style>
+        :root {
+            --python-blue: #3376AB;
+            --python-yellow: #ffd43B;
+            --python-white: #f0f0f0;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--python-white);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--python-blue), #2a5f8a);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 255, 0.08);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .faq-search {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--python-blue);
+            box-shadow: 0 5px 15px rgba(51, 118, 171, 0.1);
+        }
+        
+        .faq-categories {
+            flex: 0 0 250px;
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .category-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-btn {
+            display: block;
+            padding: 0.8rem 1rem;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: var(--dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--python-blue);
+            color: white;
+        }
+        
+        .category-btn .icon {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .faq-questions {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: var(--python-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .icon {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--python-blue);
+            transition: all 0.3s;
+        }
+        
+        .faq-item.active .faq-question:after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .contact-box {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .contact-box h3 {
+            color: var(--python-blue);
+            margin-top: 0;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background: var(--python-blue);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--python-blue);
+        }
+        
+        .contact-btn:hover {
+            background: white;
+            color: var(--python-blue);
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .faq-container {
+                flex-direction: column;
+            }
+            
+            .faq-categories {
+                flex: 1;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Centre de Compétences Algerie Telecom</h1>
+        <p>Trouvez des réponses à vos questions fréquemment posées</p>
+    </header>
+    
+    <div class="container">
+        <div class="faq-search">
+            <input type="text" class="search-box" placeholder="Rechercher dans les FAQ...">
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-categories">
+                <ul class="category-list">
+                    <li class="category-item">
+                        <button class="category-btn active">
+                            <i class="fas fa-question-circle icon"></i> Toutes les questions
+                        </button>
+                    </li>
+                    <li class="category-item">
+                        <button class="category-btn">
+                            <i class="fas fa-graduation-cap icon"></i> Formations
+                        </button>
+                    </li>
+                    
+                    <li class="category-item">
+                        <button class="category-btn">
+                            <i class="fas fa-user-tie icon"></i> Inscription
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="faq-questions">
+                <div class="faq-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap icon"></i> Questions sur les formations
+                    </h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Quelles sont les formations proposées par le centre de compétences ?</div>
+                        <div class="faq-answer">
+                            <p>Le Centre de Compétences Algerie Telecom propose une large gamme de formations dans les domaines des télécommunications, des réseaux, de la cybersécurité, du cloud computing, et des technologies émergentes. Nos programmes couvrent tous les niveaux, du débutant à l'expert.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Comment puis-je m'inscrire à une formation ?</div>
+                        <div class="faq-answer">
+                            <p>L'inscription peut se faire en ligne via notre plateforme, par email à l'adresse formation@algerietelecom.dz, ou en vous présentant directement au centre. Vous devrez fournir une pièce d'identité et remplir le formulaire d'inscription.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Quelle est la durée typique d'une formation ?</div>
+                        <div class="faq-answer">
+                            <p>La durée varie selon le programme :</p>
+                            <ul>
+                                <li>Formations courtes : 1 à 5 jours</li>
+                                <li>Formations standards : 2 à 4 semaines</li>
+                                <li>Programmes certifiants : 3 à 6 mois</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-certificate icon"></i> Questions sur les certifications
+                    </h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Vos certifications sont-elles reconnues internationalement ?</div>
+                        <div class="faq-answer">
+                            <p>Oui, la plupart de nos certifications sont accréditées par des organismes internationaux tels que Cisco, Huawei, Microsoft et l'UIT. Certaines formations débouchent sur des certifications spécifiques à Algerie Telecom.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Comment se déroulent les examens de certification ?</div>
+                        <div class="faq-answer">
+                            <p>Les examens peuvent être :</p>
+                            <ul>
+                                <li>En présentiel dans nos centres agréés</li>
+                                <li>Pratiques en laboratoire pour les certifications techniques</li>
+                            </ul>
+                            <p>La modalité exacte vous sera communiquée lors de votre inscription.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-tie icon"></i> Questions administratives
+                    </h2>
+                    <div class="faq-item">
+                        <div class="faq-question">Puis-je annuler ou reporter ma formation ?</div>
+                        <div class="faq-answer">
+                            <p>Oui, Annulation entre 15 et 5 jours avant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-box">
+            <h3>Vous n'avez pas trouvé de réponse à votre question ?</h3>
+            <p>Notre équipe est à votre disposition pour toute information complémentaire.</p>
+            <a href="#" class="contact-btn">Contactez-nous</a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2023 Centre de Compétences Algerie Telecom. Tous droits réservés.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle FAQ items
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const item = question.parentElement;
+                    item.classList.toggle('active');
+                    
+                    // Close other open items
+                    faqQuestions.forEach(q => {
+                        if (q !== question && q.parentElement.classList.contains('active')) {
+                            q.parentElement.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Category filter
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    // Here you would filter the FAQ items by category
+                    // This would require adding data attributes to items
+                });
+            });
+            
+            // Search functionality
+            const searchBox = document.querySelector('.search-box');
+            searchBox.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                // Here you would implement search logic
+                // This would require looping through all questions/answers
+            });
+        });
+    </script>
+</body>
+</html>
