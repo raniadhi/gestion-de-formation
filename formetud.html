@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Formation - Skill Center Algérie Télécom</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --python-blue: #3776AB;
+            --python-yellow: #FFD43B;
+            --python-white: #F0F0F0;
+            --header-shadow: 0 10px 30px rgba(0, 0, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--python-blue), #2c5aa0);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--header-shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+            animation: slideUp 0.8s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--python-blue);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            background: var(--python-yellow);
+            color: var(--python-blue);
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--python-blue);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--python-blue);
+            box-shadow: 0 0 0 3px rgba(55, 118, 171, 0.1);
+            outline: none;
+        }
+
+        .form-select {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus {
+            border-color: var(--python-blue);
+            box-shadow: 0 0 0 3px rgba(55, 118, 171, 0.1);
+            outline: none;
+        }
+
+        .formation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .formation-item {
+            background: var(--python-white);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .formation-item:hover {
+            border-color: var(--python-blue);
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .formation-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--python-blue);
+        }
+
+        .formation-item.selected {
+            border-color: var(--python-blue);
+            background: linear-gradient(135deg, var(--python-blue), #2c5aa0);
+            color: white;
+        }
+
+        .formation-item.selected input[type="radio"] {
+            accent-color: var(--python-yellow);
+        }
+
+        .formation-icon {
+            font-size: 1.2rem;
+            color: var(--python-blue);
+            min-width: 24px;
+        }
+
+        .formation-item.selected .formation-icon {
+            color: var(--python-yellow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--python-blue), #2c5aa0);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2c5aa0, var(--python-blue));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(55, 118, 171, 0.3);
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-card {
+                padding: 25px;
+            }
+            
+            .formation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="bi bi-mortarboard-fill"></i> Skill Center</h1>
+            <p>Algérie Télécom - Centre de Formation</p>
+            <div class="badge bg-warning text-dark fs-6 px-3 py-2">
+                <i class="bi bi-star-fill"></i> Inscription aux Formations
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="bi bi-check-circle-fill"></i> Votre inscription a été soumise avec succès !
+        </div>
+
+        <div class="form-card">
+            <form id="registrationForm">
+                <!-- Informations personnelles -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-person-fill"></i>
+                        Informations Personnelles
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-person-badge-fill me-2"></i>
+                                    Nom <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="nom" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-person-fill me-2"></i>
+                                    Prénom <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="prenom" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-envelope-fill me-2"></i>
+                                    Email <span class="required">*</span>
+                                </label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-telephone-fill me-2"></i>
+                                    Téléphone <span class="required">*</span>
+                                </label>
+                                <input type="tel" class="form-control" name="telephone" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-mortarboard-fill me-2"></i>
+                                    Niveau d'études
+                                </label>
+                                <select class="form-select" name="niveau">
+                                    <option value="">Sélectionnez votre niveau</option>
+                                    <option value="bac">Baccalauréat</option>
+                                     <option value="bac">Bac+1</option>
+                                    <option value="bac+2">Bac+2</option>
+                                    <option value="bac+3">Bac+3 (Licence)</option>
+                                    <option value="bac+5">Bac+5 (Master)</option>
+                                    <option value="ingenieur">Ingénieur</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-briefcase-fill me-2"></i>
+                                    Expérience professionnelle
+                                </label>
+                                <select class="form-select" name="experience">
+                                    <option value="">Sélectionnez votre expérience</option>
+                                    <option value="debutant">Débutant</option>
+                                    <option value="1-2ans">Intermédiaire</option>
+                                    <option value="3-5ans">Avancé</option>
+                                    <option value="5ans+">Expert</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Choix de formation -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-book-fill"></i>
+                        Choix de Formation <span class="required">*</span>
+                    </h3>
+                    <div class="formation-grid">
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="vm-gns3-eve" id="vm-gns3-eve">
+                            <i class="bi bi-hdd-network formation-icon"></i>
+                            <label for="vm-gns3-eve">Création VM GNS3 & EVE-NG</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="phishing-malware" id="phishing-malware">
+                            <i class="bi bi-shield-exclamation formation-icon"></i>
+                            <label for="phishing-malware">Introduction au Phishing and Malware Analysis</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="adressage-reseau" id="adressage-reseau">
+                            <i class="bi bi-router formation-icon"></i>
+                            <label for="adressage-reseau">Adressage réseau et dépannage de base</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="cloud-virtualisation" id="cloud-virtualisation">
+                            <i class="bi bi-cloud-fill formation-icon"></i>
+                            <label for="cloud-virtualisation">Cloud and Virtualisation Concepts</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="routage-statique" id="routage-statique">
+                            <i class="bi bi-diagram-3 formation-icon"></i>
+                            <label for="routage-statique">Conception de routage statique et dynamique</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="reseau-entreprise" id="reseau-entreprise">
+                            <i class="bi bi-building formation-icon"></i>
+                            <label for="reseau-entreprise">Désign réseau d'entreprise</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="bmc" id="bmc">
+                            <i class="bi bi-kanban formation-icon"></i>
+                            <label for="bmc">Formation BMC</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="cyber-security" id="cyber-security">
+                            <i class="bi bi-shield-lock formation-icon"></i>
+                            <label for="cyber-security">Formation Cyber Security</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="data-analysis" id="data-analysis">
+                            <i class="bi bi-graph-up formation-icon"></i>
+                            <label for="data-analysis">Formation Data Analysis Power BI</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="propriete-intellectuelle" id="propriete-intellectuelle">
+                            <i class="bi bi-files formation-icon"></i>
+                            <label for="propriete-intellectuelle">Formation les brefs et la propriété intellectuelle</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="network-ipv6" id="network-ipv6">
+                            <i class="bi bi-globe formation-icon"></i>
+                            <label for="network-ipv6">Formation Network IPv6</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="creation-entreprise" id="creation-entreprise">
+                            <i class="bi bi-briefcase formation-icon"></i>
+                            <label for="creation-entreprise">Formation Création d'une Entreprise</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="facture-autoentrepreneur" id="facture-autoentrepreneur">
+                            <i class="bi bi-receipt formation-icon"></i>
+                            <label for="facture-autoentrepreneur">Comment Etablir une facture autoentrepreneur</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="g12-autoentrepreneur" id="g12-autoentrepreneur">
+                            <i class="bi bi-file-earmark-text formation-icon"></i>
+                            <label for="g12-autoentrepreneur">Comment remplir G12 autoentrepreneur</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="cybersecurity-protocols" id="cybersecurity-protocols">
+                            <i class="bi bi-file-lock formation-icon"></i>
+                            <label for="cybersecurity-protocols">Cybersecurity Protocols and Log Files</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="vpn-concepts" id="vpn-concepts">
+                            <i class="bi bi-shield-check formation-icon"></i>
+                            <label for="vpn-concepts">Formation+Lab: VPN Concepts</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="gestion-cyber-menaces" id="gestion-cyber-menaces">
+                            <i class="bi bi-exclamation-triangle formation-icon"></i>
+                            <label for="gestion-cyber-menaces">Gestion des Cyber menaces</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="initiation-programmation" id="initiation-programmation">
+                            <i class="bi bi-code-slash formation-icon"></i>
+                            <label for="initiation-programmation">Initiation à la programmation</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="iot-digital" id="iot-digital">
+                            <i class="bi bi-cpu formation-icon"></i>
+                            <label for="iot-digital">Introduction to IoT and Digital Transformation</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="wordpress-lab" id="wordpress-lab">
+                            <i class="bi bi-wordpress formation-icon"></i>
+                            <label for="wordpress-lab">Lab: Base de conception Site Web par WordPress</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="python-avance" id="python-avance">
+                            <i class="bi bi-file-code formation-icon"></i>
+                            <label for="python-avance">Python avancé</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="securite-bdd" id="securite-bdd">
+                            <i class="bi bi-database-lock formation-icon"></i>
+                            <label for="securite-bdd">Sécurité des bases de données</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="support-securite-reseaux" id="support-securite-reseaux">
+                            <i class="bi bi-network formation-icon"></i>
+                            <label for="support-securite-reseaux">Support et sécurité des réseaux</label>
+                        </div>
+                        <div class="formation-item">
+                            <input type="radio" name="formation" value="iso-27001" id="iso-27001">
+                            <i class="bi bi-award formation-icon"></i>
+                            <label for="iso-27001">Using ISO 27001 for Security Checklists and Assessment</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motivation -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-chat-text-fill"></i>
+                        Motivation
+                    </h3>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-heart-fill me-2"></i>
+                            Pourquoi souhaitez-vous suivre cette formation ?
+                        </label>
+                        <textarea class="form-control" name="motivation" rows="4" placeholder="Expliquez brièvement vos motivations et objectifs..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-send-fill"></i> Soumettre ma candidature
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Gestion de la sélection des formations
+        document.querySelectorAll('.formation-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Retirer la classe selected de tous les items
+                document.querySelectorAll('.formation-item').forEach(i => i.classList.remove('selected'));
+                // Ajouter la classe selected à l'item cliqué
+                this.classList.add('selected');
+                // Cocher le radio button correspondant
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        // Gestion du formulaire
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Vérifier qu'une formation est sélectionnée
+            const formationSelected = document.querySelector('input[name="formation"]:checked');
+            if (!formationSelected) {
+                alert('Veuillez sélectionner une formation.');
+                return;
+            }
+            
+            // Simulation d'envoi
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Scroll vers le message de succès
+            document.getElementById('successMessage').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            // Réinitialiser le formulaire après 3 secondes
+            setTimeout(() => {
+                this.reset();
+                document.querySelectorAll('.formation-item').forEach(i => i.classList.remove('selected'));
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        });
+
+        // Animation au scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.form-card, .formation-item');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
