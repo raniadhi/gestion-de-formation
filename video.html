@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formations - Skill Center</title>
+  <title>Vidéos - Skill Center</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
@@ -24,10 +24,11 @@
     .header { background: white; padding: 20px 30px; box-shadow: var(--header-shadow); display: flex; justify-content: space-between; align-items: center; }
     .header-title { color: var(--python-blue); font-size: 1.5rem; font-weight: 700; }
     .btn-add { background: var(--python-blue); color: #fff; }
-    .formation-card { background: white; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-bottom: 20px; }
-    .formation-header { display: flex; justify-content: space-between; align-items: center; }
+    .video-card { background: white; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-bottom: 20px; }
+    .video-frame { width: 100%; height: auto; border-radius: 10px; overflow: hidden; }
+    video { width: 100%; border-radius: 10px; }
   </style>
-
+ 
 
 </head>
 <body>
@@ -46,13 +47,13 @@
     <div class="menu-item " onclick="navigate('etudiants')">
       <i class="bi bi-people-fill"></i> <span class="menu-text">Étudiants</span>
     </div>
-    <div class="menu-item active" onclick="navigate('Formations')">
+    <div class="menu-item" onclick="navigate('Formations')">
       <i class="bi bi-journal-bookmark-fill"></i> <span class="menu-text">Formations</span>
     </div>
     <div class="menu-item" onclick="navigate('Formateurs')">
       <i class="bi bi-person-badge-fill"></i> <span class="menu-text">Formateurs</span>
     </div>
-    <div class="menu-item" onclick="navigate('Video')">
+    <div class="menu-item active" onclick="navigate('Video')">
       <i class="bi bi-camera-video-fill"></i> <span class="menu-text">Vidéo</span>
     </div>
     <div class="menu-item" onclick="navigate('Annonces')">
@@ -69,40 +70,48 @@
 
 <div class="main-content">
   <div class="header">
-    <div class="header-title">Gestion des Formations</div>
-    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#formationModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
+    <div class="header-title">Gestion des Vidéos</div>
+    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#videoModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
   </div>
 
-  <div id="formationList" class="mt-4">
-    <!-- Exemple de formation -->
-    <div class="formation-card">
-      <div class="formation-header">
-        <h5>Python Avancé</h5>
-        <div>
-          <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-        </div>
+  <div id="videoList" class="mt-4">
+    <!-- Exemple de vidéo déjà présente -->
+    <div class="video-card">
+      <h5>Introduction à Python</h5>
+      <div class="video-frame">
+        <video controls>
+          <source src="videos/python_intro.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+        </video>
       </div>
-      <p>Maîtriser les concepts avancés du langage Python.</p>
+    </div>
+    <div class="video-card">
+      <h5>Sécurité Réseaux</h5>
+      <div class="video-frame">
+        <video controls>
+          <source src="videos/security_basics.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+        </video>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="formationModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Ajouter une formation</h5>
+        <h5 class="modal-title">Ajouter une vidéo locale</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" id="formationTitle" placeholder="Nom de la formation">
-        <textarea class="form-control" id="formationDesc" placeholder="Description"></textarea>
+        <input type="text" class="form-control mb-2" id="videoTitle" placeholder="Titre de la vidéo">
+        <input type="text" class="form-control mb-2" id="videoPath" placeholder="Chemin vers la vidéo (ex: videos/ma_video.mp4)">
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button class="btn btn-primary" onclick="addFormation()">Ajouter</button>
+        <button class="btn btn-primary" onclick="addVideo()">Ajouter</button>
       </div>
     </div>
   </div>
@@ -114,27 +123,28 @@ function navigate(page) {
   window.location.href = page + '.html';
 }
 
-function addFormation() {
-  const title = document.getElementById('formationTitle').value;
-  const desc = document.getElementById('formationDesc').value;
-  const formationList = document.getElementById('formationList');
+function addVideo() {
+  const title = document.getElementById('videoTitle').value;
+  const path = document.getElementById('videoPath').value;
+  const videoList = document.getElementById('videoList');
 
   const card = document.createElement('div');
-  card.className = 'formation-card';
+  card.className = 'video-card';
   card.innerHTML = `
-    <div class="formation-header">
-      <h5>${title}</h5>
-      <div>
-        <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-      </div>
+    <h5>${title}</h5>
+    <div class="video-frame">
+      <video controls>
+        <source src="${path}" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+      </video>
     </div>
-    <p>${desc}</p>
   `;
-  formationList.prepend(card);
-  document.getElementById('formationTitle').value = "";
-  document.getElementById('formationDesc').value = "";
-  bootstrap.Modal.getInstance(document.getElementById('formationModal')).hide();
+
+  videoList.prepend(card);
+
+  document.getElementById('videoTitle').value = "";
+  document.getElementById('videoPath').value = "";
+  bootstrap.Modal.getInstance(document.getElementById('videoModal')).hide();
 }
 </script>
 </body>

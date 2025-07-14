@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formations - Skill Center</title>
+  <title>Formateurs - Skill Center</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
@@ -24,10 +24,9 @@
     .header { background: white; padding: 20px 30px; box-shadow: var(--header-shadow); display: flex; justify-content: space-between; align-items: center; }
     .header-title { color: var(--python-blue); font-size: 1.5rem; font-weight: 700; }
     .btn-add { background: var(--python-blue); color: #fff; }
-    .formation-card { background: white; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-bottom: 20px; }
-    .formation-header { display: flex; justify-content: space-between; align-items: center; }
+    .table-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-top: 20px; }
   </style>
-
+ 
 
 </head>
 <body>
@@ -46,11 +45,11 @@
     <div class="menu-item " onclick="navigate('etudiants')">
       <i class="bi bi-people-fill"></i> <span class="menu-text">Étudiants</span>
     </div>
-    <div class="menu-item active" onclick="navigate('Formations')">
+    <div class="menu-item" onclick="navigate('Formations')">
       <i class="bi bi-journal-bookmark-fill"></i> <span class="menu-text">Formations</span>
     </div>
-    <div class="menu-item" onclick="navigate('Formateurs')">
-      <i class="bi bi-person-badge-fill"></i> <span class="menu-text">Formateurs</span>
+    <div class="menu-item active" onclick="navigate('Formateurs')">
+      <i class="bi bi-people-fill"></i> <span class="menu-text">Formateurs</span>
     </div>
     <div class="menu-item" onclick="navigate('Video')">
       <i class="bi bi-camera-video-fill"></i> <span class="menu-text">Vidéo</span>
@@ -66,43 +65,53 @@
 
 <!-- ... le reste de ton HTML reste identique ... -->
 
-
 <div class="main-content">
   <div class="header">
-    <div class="header-title">Gestion des Formations</div>
-    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#formationModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
+    <div class="header-title">Gestion des Formateurs</div>
+    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#studentModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
   </div>
 
-  <div id="formationList" class="mt-4">
-    <!-- Exemple de formation -->
-    <div class="formation-card">
-      <div class="formation-header">
-        <h5>Python Avancé</h5>
-        <div>
-          <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-        </div>
-      </div>
-      <p>Maîtriser les concepts avancés du langage Python.</p>
-    </div>
+  <div class="table-card">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="studentTable">
+        <tr>
+          <td>Ahmed Benali</td>
+          <td>ahmed.benali@email.com</td>
+          <td>0555 44 33 22</td>
+          <td>
+            <button class="btn btn-sm btn-warning" onclick="editStudent(this)"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteStudent(this)"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="formationModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Ajouter une formation</h5>
+        <h5 class="modal-title">Ajouter un Formateur</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" id="formationTitle" placeholder="Nom de la formation">
-        <textarea class="form-control" id="formationDesc" placeholder="Description"></textarea>
+        <input type="text" class="form-control mb-2" id="nom" placeholder="Nom">
+        <input type="email" class="form-control mb-2" id="email" placeholder="Email">
+        <input type="text" class="form-control mb-2" id="telephone" placeholder="Téléphone">
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button class="btn btn-primary" onclick="addFormation()">Ajouter</button>
+        <button class="btn btn-primary" onclick="saveStudent()">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -114,27 +123,44 @@ function navigate(page) {
   window.location.href = page + '.html';
 }
 
-function addFormation() {
-  const title = document.getElementById('formationTitle').value;
-  const desc = document.getElementById('formationDesc').value;
-  const formationList = document.getElementById('formationList');
+function saveStudent() {
+  const nom = document.getElementById('nom').value;
+  const email = document.getElementById('email').value;
+  const telephone = document.getElementById('telephone').value;
 
-  const card = document.createElement('div');
-  card.className = 'formation-card';
-  card.innerHTML = `
-    <div class="formation-header">
-      <h5>${title}</h5>
-      <div>
-        <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-      </div>
-    </div>
-    <p>${desc}</p>
+  const tbody = document.getElementById('studentTable');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${nom}</td>
+    <td>${email}</td>
+    <td>${telephone}</td>
+    <td>
+      <button class="btn btn-sm btn-warning" onclick="editStudent(this)"><i class="bi bi-pencil"></i></button>
+      <button class="btn btn-sm btn-danger" onclick="deleteStudent(this)"><i class="bi bi-trash"></i></button>
+    </td>
   `;
-  formationList.prepend(card);
-  document.getElementById('formationTitle').value = "";
-  document.getElementById('formationDesc').value = "";
-  bootstrap.Modal.getInstance(document.getElementById('formationModal')).hide();
+  tbody.appendChild(row);
+
+  document.getElementById('nom').value = "";
+  document.getElementById('email').value = "";
+  document.getElementById('telephone').value = "";
+  bootstrap.Modal.getInstance(document.getElementById('studentModal')).hide();
+}
+
+function deleteStudent(btn) {
+  if (confirm("Voulez-vous vraiment supprimer cet étudiant ?")) {
+    btn.closest('tr').remove();
+  }
+}
+
+function editStudent(btn) {
+  const row = btn.closest('tr');
+  const cells = row.querySelectorAll('td');
+  document.getElementById('nom').value = cells[0].innerText;
+  document.getElementById('email').value = cells[1].innerText;
+  document.getElementById('telephone').value = cells[2].innerText;
+  row.remove();
+  new bootstrap.Modal(document.getElementById('studentModal')).show();
 }
 </script>
 </body>

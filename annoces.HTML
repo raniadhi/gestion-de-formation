@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formations - Skill Center</title>
+  <title>Annonces - Skill Center</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
@@ -24,15 +24,10 @@
     .header { background: white; padding: 20px 30px; box-shadow: var(--header-shadow); display: flex; justify-content: space-between; align-items: center; }
     .header-title { color: var(--python-blue); font-size: 1.5rem; font-weight: 700; }
     .btn-add { background: var(--python-blue); color: #fff; }
-    .formation-card { background: white; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-bottom: 20px; }
-    .formation-header { display: flex; justify-content: space-between; align-items: center; }
+    .announcement-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: var(--header-shadow); margin-top: 20px; }
   </style>
-
-
+  
 </head>
-<body>
-<!-- ... Garde le <head> tel qu'il est ... -->
-
 <body>
 <div class="sidebar">
   <div class="sidebar-header">
@@ -43,10 +38,10 @@
     <div class="menu-item" onclick="navigate('dashboard')">
       <i class="bi bi-speedometer2"></i> <span class="menu-text">Dashboard</span>
     </div>
-    <div class="menu-item " onclick="navigate('etudiants')">
+    <div class="menu-item" onclick="navigate('etudiants')">
       <i class="bi bi-people-fill"></i> <span class="menu-text">Étudiants</span>
     </div>
-    <div class="menu-item active" onclick="navigate('Formations')">
+    <div class="menu-item" onclick="navigate('Formations')">
       <i class="bi bi-journal-bookmark-fill"></i> <span class="menu-text">Formations</span>
     </div>
     <div class="menu-item" onclick="navigate('Formateurs')">
@@ -55,7 +50,7 @@
     <div class="menu-item" onclick="navigate('Video')">
       <i class="bi bi-camera-video-fill"></i> <span class="menu-text">Vidéo</span>
     </div>
-    <div class="menu-item" onclick="navigate('Annonces')">
+    <div class="menu-item active" onclick="navigate('Annonces')">
       <i class="bi bi-megaphone-fill"></i> <span class="menu-text">Annonces</span>
     </div>
     <div class="menu-item" onclick="navigate('Salles')">
@@ -64,45 +59,39 @@
   </div>
 </div>
 
-<!-- ... le reste de ton HTML reste identique ... -->
-
-
 <div class="main-content">
   <div class="header">
-    <div class="header-title">Gestion des Formations</div>
-    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#formationModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
+    <div class="header-title">Gestion des Annonces</div>
+    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#annonceModal"><i class="bi bi-plus-circle"></i> Ajouter</button>
   </div>
 
-  <div id="formationList" class="mt-4">
-    <!-- Exemple de formation -->
-    <div class="formation-card">
-      <div class="formation-header">
-        <h5>Python Avancé</h5>
-        <div>
-          <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-        </div>
+  <div id="annonceList" class="mt-4">
+    <div class="announcement-card">
+      <h5>Nouvelle session de formation Python</h5>
+      <p>La session débutera le 15 juillet. Inscrivez-vous rapidement !</p>
+      <div>
+        <button class="btn btn-sm btn-warning" onclick="editAnnonce(this)"><i class="bi bi-pencil"></i></button>
+        <button class="btn btn-sm btn-danger" onclick="deleteAnnonce(this)"><i class="bi bi-trash"></i></button>
       </div>
-      <p>Maîtriser les concepts avancés du langage Python.</p>
     </div>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="formationModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="annonceModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Ajouter une formation</h5>
+        <h5 class="modal-title">Ajouter une annonce</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" id="formationTitle" placeholder="Nom de la formation">
-        <textarea class="form-control" id="formationDesc" placeholder="Description"></textarea>
+        <input type="text" class="form-control mb-2" id="annonceTitre" placeholder="Titre de l'annonce">
+        <textarea class="form-control" id="annonceTexte" placeholder="Contenu de l'annonce"></textarea>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button class="btn btn-primary" onclick="addFormation()">Ajouter</button>
+        <button class="btn btn-primary" onclick="saveAnnonce()">Ajouter</button>
       </div>
     </div>
   </div>
@@ -114,27 +103,44 @@ function navigate(page) {
   window.location.href = page + '.html';
 }
 
-function addFormation() {
-  const title = document.getElementById('formationTitle').value;
-  const desc = document.getElementById('formationDesc').value;
-  const formationList = document.getElementById('formationList');
+function saveAnnonce() {
+  const titre = document.getElementById('annonceTitre').value;
+  const texte = document.getElementById('annonceTexte').value;
 
+  const annonceList = document.getElementById('annonceList');
   const card = document.createElement('div');
-  card.className = 'formation-card';
+  card.className = 'announcement-card';
   card.innerHTML = `
-    <div class="formation-header">
-      <h5>${title}</h5>
-      <div>
-        <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
-        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-      </div>
+    <h5>${titre}</h5>
+    <p>${texte}</p>
+    <div>
+      <button class="btn btn-sm btn-warning" onclick="editAnnonce(this)"><i class="bi bi-pencil"></i></button>
+      <button class="btn btn-sm btn-danger" onclick="deleteAnnonce(this)"><i class="bi bi-trash"></i></button>
     </div>
-    <p>${desc}</p>
   `;
-  formationList.prepend(card);
-  document.getElementById('formationTitle').value = "";
-  document.getElementById('formationDesc').value = "";
-  bootstrap.Modal.getInstance(document.getElementById('formationModal')).hide();
+
+  annonceList.prepend(card);
+  document.getElementById('annonceTitre').value = "";
+  document.getElementById('annonceTexte').value = "";
+  bootstrap.Modal.getInstance(document.getElementById('annonceModal')).hide();
+}
+
+function deleteAnnonce(btn) {
+  if (confirm("Voulez-vous supprimer cette annonce ?")) {
+    btn.closest('.announcement-card').remove();
+  }
+}
+
+function editAnnonce(btn) {
+  const card = btn.closest('.announcement-card');
+  const titre = card.querySelector('h5').innerText;
+  const texte = card.querySelector('p').innerText;
+
+  document.getElementById('annonceTitre').value = titre;
+  document.getElementById('annonceTexte').value = texte;
+  card.remove();
+
+  new bootstrap.Modal(document.getElementById('annonceModal')).show();
 }
 </script>
 </body>
